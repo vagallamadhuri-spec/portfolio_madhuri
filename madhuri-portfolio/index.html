@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="day">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>V. Madhuri — Developer Portfolio</title>
+<meta name="description" content="V. Madhuri — B.Tech CSE student. Java, C, Python, React developer portfolio." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Kalam:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F6F1E3;
+    --cream-line:#DED2AE;
+    --ink:#2B2620;
+    --coral:#D9553A;
+    --denim:#3C5A8A;
+    --highlight:#F4D35E;
+
+    --bg:var(--cream);
+    --bg-card:#FBF8EF;
+    --line:var(--cream-line);
+    --text:var(--ink);
+    --text-muted:#726C5E;
+    --accent:var(--coral);
+    --accent-2:var(--denim);
+    --tag-bg:var(--highlight);
+    --radius:3px;
+    --hand:'Caveat', cursive;
+    --hand-sm:'Kalam', cursive;
+    --sans:'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  html[data-theme="night"]{
+    --bg:#221C15;
+    --bg-card:#2B241B;
+    --line:#453B2C;
+    --text:#F1E9D6;
+    --text-muted:#B0A68E;
+    --accent:#EA7A5C;
+    --accent-2:#8FB0E0;
+    --tag-bg:#5C4E20;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+  }
+
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(var(--bg) 0px, var(--bg) 34px, var(--line) 35px);
+    color:var(--text);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.65;
+    transition:background-color 0.25s ease, color 0.25s ease;
+    position:relative;
+  }
+  html[data-theme="night"] body{
+    background:
+      repeating-linear-gradient(var(--bg) 0px, var(--bg) 34px, rgba(255,255,255,0.05) 35px);
+  }
+
+  /* notebook margin rule */
+  body::before{
+    content:"";
+    position:fixed;
+    top:0; bottom:0; left:96px;
+    width:2px;
+    background:var(--accent);
+    opacity:0.35;
+    z-index:1;
+  }
+  @media (max-width: 860px){ body::before{ display:none; } }
+
+  a{ color:inherit; }
+  ::selection{ background:var(--highlight); color:var(--ink); }
+
+  .hand-underline{
+    display:inline-block;
+    position:relative;
+  }
+  .hand-underline svg{
+    position:absolute; left:0; bottom:-8px; width:100%; height:10px;
+  }
+
+  /* ---------- Navbar: folder tabs ---------- */
+  .navbar{
+    position:sticky; top:0; z-index:50;
+    background:color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter:blur(6px);
+  }
+  .nav-top{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 32px 0;
+  }
+  .brand{ display:flex; align-items:baseline; gap:8px; }
+  .brand-mark{ font-family:var(--hand); font-size:26px; color:var(--accent); }
+  .brand-name{ font-family:var(--hand-sm); font-size:14px; color:var(--text-muted); }
+  .nav-actions{ display:flex; align-items:center; gap:10px; }
+  .theme-toggle{
+    font-family:var(--hand-sm); font-size:12.5px;
+    background:none; border:1px solid var(--line);
+    color:var(--text-muted); padding:7px 12px; border-radius:var(--radius);
+    cursor:pointer; transition:border-color 0.15s ease, color 0.15s ease;
+  }
+  .theme-toggle:hover{ border-color:var(--accent); color:var(--accent); }
+  .btn-nav-resume{
+    font-family:var(--hand-sm); font-size:12.5px; text-decoration:none;
+    padding:8px 14px; border-radius:var(--radius);
+    background:var(--accent); color:var(--bg); font-weight:700;
+  }
+
+  .nav-tabs{
+    display:flex; gap:6px;
+    padding:14px 32px 0;
+    overflow-x:auto;
+    scrollbar-width:none;
+    border-bottom:2px solid var(--line);
+  }
+  .nav-tabs::-webkit-scrollbar{ display:none; }
+  .nav-tabs a{
+    font-family:var(--hand-sm); font-size:13.5px;
+    text-decoration:none; color:var(--text-muted);
+    padding:9px 18px;
+    white-space:nowrap;
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-bottom:none;
+    border-radius:10px 10px 0 0;
+    transform:translateY(2px);
+    transition:color 0.15s ease, transform 0.15s ease;
+  }
+  .nav-tabs a:hover{ color:var(--text); }
+  .nav-tabs a.active{
+    color:var(--accent);
+    transform:translateY(0);
+    border-color:var(--accent);
+    border-bottom:2px solid var(--bg);
+    font-weight:700;
+  }
+
+  /* ---------- Section shell ---------- */
+  main{ max-width:1000px; margin:0 auto; position:relative; z-index:2; }
+  .section{ padding:60px 32px 56px; }
+  .kicker{
+    font-family:var(--hand-sm); font-size:13px; color:var(--accent-2);
+    margin:0 0 6px;
+  }
+  h1,h2,h3{ font-family:var(--hand); font-weight:700; margin:0; }
+  .section h2{ font-size:34px; margin-bottom:30px; }
+  p{ color:var(--text-muted); max-width:64ch; }
+
+  .pin{
+    position:absolute; top:-8px; left:20px;
+    width:12px; height:12px; border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 2px 3px rgba(0,0,0,0.25);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{ padding-top:44px; }
+  .hero-grid{ display:grid; grid-template-columns:1.2fr 1fr; gap:36px; align-items:start; }
+  .hero-copy h1{ font-size:clamp(46px, 7vw, 68px); line-height:1; margin-bottom:6px; }
+  .hero-copy .role{ font-family:var(--hand-sm); color:var(--text-muted); font-size:17px; margin:14px 0 16px; }
+  .btn-row{ display:flex; gap:12px; margin-top:22px; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--hand-sm); font-size:13.5px; text-decoration:none;
+    padding:10px 18px; border-radius:var(--radius);
+    border:1px solid var(--line); color:var(--text);
+    display:inline-flex; align-items:center; gap:8px;
+    transition:border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+  }
+  .btn.primary{ background:var(--accent); border-color:var(--accent); color:var(--bg); font-weight:700; }
+  .btn.primary:hover{ opacity:0.88; }
+  .btn:not(.primary):hover{ border-color:var(--accent); color:var(--accent); }
+
+  .index-card{
+    position:relative;
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px 22px 20px;
+    box-shadow:0 6px 14px rgba(0,0,0,0.08);
+    transform:rotate(1.2deg);
+  }
+  .index-card p{ font-family:var(--hand-sm); font-size:15.5px; color:var(--text); max-width:none; }
+  .index-card .stamp-line{ margin-top:14px; font-family:var(--hand-sm); font-size:12.5px; color:var(--text-muted); }
+
+  .stats-row{ display:flex; gap:14px; margin-top:28px; flex-wrap:wrap; }
+  .stat{
+    position:relative;
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    padding:14px 18px;
+    border-radius:var(--radius);
+    box-shadow:0 4px 8px rgba(0,0,0,0.06);
+  }
+  .stat:nth-child(2){ transform:rotate(-1deg); }
+  .stat:nth-child(3){ transform:rotate(0.8deg); }
+  .stat b{ display:block; font-family:var(--hand); font-size:26px; color:var(--accent); line-height:1; }
+  .stat span{ font-size:11px; color:var(--text-muted); font-family:var(--hand-sm); }
+
+  /* ---------- About ---------- */
+  .about-grid{ display:grid; grid-template-columns:1fr; gap:16px; }
+
+  /* ---------- Skills ---------- */
+  .skill-groups{ display:grid; gap:24px; }
+  .skill-group .label{ font-family:var(--hand-sm); font-size:14px; color:var(--text-muted); margin-bottom:10px; }
+  .chips{ display:flex; flex-wrap:wrap; gap:10px; }
+  .chip{
+    font-family:var(--hand-sm); font-size:14px;
+    padding:8px 14px;
+    background:var(--tag-bg);
+    color:var(--ink);
+    border-radius:2px 10px 2px 10px;
+  }
+  html[data-theme="night"] .chip{ color:var(--text); }
+
+  /* ---------- Projects ---------- */
+  .filter-row{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:30px; }
+  .filter-chip{
+    font-family:var(--hand-sm); font-size:13.5px; padding:7px 14px;
+    border:1px solid var(--line); border-radius:20px;
+    background:var(--bg-card); color:var(--text-muted); cursor:pointer;
+    transition:all 0.15s ease;
+  }
+  .filter-chip:hover{ color:var(--accent); border-color:var(--accent); }
+  .filter-chip.active{ background:var(--accent); border-color:var(--accent); color:var(--bg); font-weight:700; }
+
+  .project-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(270px, 1fr)); gap:26px 22px; }
+  .card{
+    position:relative;
+    background:var(--bg-card);
+    border:1px dashed var(--line);
+    border-radius:var(--radius);
+    padding:22px 20px 18px;
+    display:flex; flex-direction:column; gap:10px;
+    box-shadow:0 5px 12px rgba(0,0,0,0.07);
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .card:nth-child(odd){ transform:rotate(-0.6deg); }
+  .card:nth-child(even){ transform:rotate(0.6deg); }
+  .card:hover{ transform:rotate(0deg) translateY(-3px); box-shadow:0 10px 20px rgba(0,0,0,0.12); }
+  .card h3{ font-size:20px; margin-top:6px; }
+  .card p{ font-size:14px; margin:0; }
+  .card .tech{ font-family:var(--hand-sm); font-size:12.5px; color:var(--accent-2); }
+  .card .card-links{ margin-top:auto; display:flex; gap:14px; padding-top:6px; }
+  .card .card-links a{
+    font-family:var(--hand-sm); font-size:13px; text-decoration:none;
+    color:var(--text-muted); border-bottom:1px solid var(--line);
+  }
+  .card .card-links a:hover{ color:var(--accent); border-color:var(--accent); }
+  .card.hidden{ display:none; }
+
+  /* ---------- Education: margin timeline ---------- */
+  .timeline{ display:flex; flex-direction:column; gap:0; }
+  .tl-item{ position:relative; padding:0 0 34px 30px; border-left:2px solid var(--line); }
+  .tl-item:last-child{ border-left-color:transparent; padding-bottom:0; }
+  .tl-item::before{
+    content:"";
+    position:absolute; left:-7px; top:2px;
+    width:12px; height:12px; border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 0 4px var(--bg);
+  }
+  .tl-date{ font-family:var(--hand-sm); font-size:13px; color:var(--accent-2); margin-bottom:4px; }
+  .tl-content h3{ font-size:20px; margin-bottom:4px; }
+  .tl-content p{ font-size:14px; margin:0; }
+
+  /* ---------- Certifications ---------- */
+  .cert-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:18px; }
+  .cert-card{
+    position:relative;
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px;
+    display:flex; gap:14px; align-items:flex-start;
+    box-shadow:0 4px 10px rgba(0,0,0,0.06);
+    transform:rotate(-0.5deg);
+  }
+  .cert-card:nth-child(even){ transform:rotate(0.5deg); }
+  .cert-mark{ font-family:var(--hand); font-size:26px; color:var(--accent); line-height:1; }
+  .cert-card h3{ font-size:18px; margin-bottom:4px; }
+  .cert-card p{ font-size:13px; margin:0; }
+
+  /* ---------- Contact ---------- */
+  .contact-grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:40px; }
+  .contact-form{ display:flex; flex-direction:column; gap:14px; }
+  .field{ display:flex; flex-direction:column; gap:6px; }
+  .field label{ font-family:var(--hand-sm); font-size:13px; color:var(--text-muted); }
+  .field input, .field textarea{
+    font-family:var(--sans); font-size:14.5px;
+    background:var(--bg-card); border:1px solid var(--line);
+    border-radius:var(--radius); color:var(--text); padding:11px 13px; resize:vertical;
+  }
+  .field input:focus, .field textarea:focus{ outline:none; border-color:var(--accent); }
+  .form-note{ font-size:12.5px; color:var(--text-muted); margin-top:2px; }
+
+  .contact-card{
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px;
+    box-shadow:0 6px 14px rgba(0,0,0,0.08);
+    transform:rotate(1deg);
+    display:flex; flex-direction:column; gap:14px;
+  }
+  .contact-row{
+    display:flex; align-items:center; gap:12px;
+    font-family:var(--hand-sm); font-size:14.5px;
+    text-decoration:none; color:var(--text);
+    padding:10px 12px;
+    border:1px solid var(--line); border-radius:var(--radius);
+    transition:border-color 0.15s ease, color 0.15s ease;
+  }
+  .contact-row:hover{ border-color:var(--accent); color:var(--accent); }
+  .contact-row .k{ color:var(--text-muted); width:70px; flex-shrink:0; }
+
+  footer{
+    padding:26px 32px; font-family:var(--hand-sm); font-size:12.5px; color:var(--text-muted);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    max-width:1000px; margin:0 auto; position:relative; z-index:2;
+  }
+
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  @media (max-width: 860px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .contact-grid{ grid-template-columns:1fr; }
+    .index-card{ transform:none; }
+  }
+  @media (max-width: 620px){
+    .nav-top{ padding:14px 18px 0; }
+    .nav-tabs{ padding:12px 18px 0; }
+    .brand-name{ display:none; }
+    .section{ padding:44px 18px; }
+    .card{ transform:none !important; }
+    .cert-card{ transform:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="nav-top">
+    <div class="brand">
+      <span class="brand-mark">V. Madhuri</span>
+      <span class="brand-name">— field notes</span>
+    </div>
+    <div class="nav-actions">
+      <a class="btn-nav-resume" href="resume.pdf" download>Resume</a>
+      <button class="theme-toggle" id="themeToggle">page: day</button>
+    </div>
+  </div>
+  <nav class="nav-tabs" id="navTabs">
+    <a href="#profile">Profile</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#certifications">Certifications</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</div>
+
+<main>
+
+  <!-- Hero / Profile -->
+  <section class="section hero" id="profile">
+    <p class="kicker">— profile</p>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <h1>
+          <span class="hand-underline">Hey, I'm Madhuri.
+            <svg viewBox="0 0 300 10" preserveAspectRatio="none"><path d="M2,6 C60,1 240,10 298,4" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/></svg>
+          </span>
+        </h1>
+        <p class="role">B.Tech CSE student · KL University, Hyderabad</p>
+        <p>Building things that run close to the metal — shells, stacks and small systems in
+          C and Java — while shipping web interfaces with React and JavaScript.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="resume.pdf" download>Download resume</a>
+          <a class="btn" href="#projects">View projects</a>
+          <a class="btn" href="#contact">Get in touch</a>
+        </div>
+        <div class="stats-row">
+          <div class="stat"><b>7</b><span>languages &amp; tools</span></div>
+          <div class="stat"><b>6</b><span>projects shipped</span></div>
+          <div class="stat" id="ghRepoStat"><b>—</b><span>public repos</span></div>
+        </div>
+      </div>
+      <div class="index-card">
+        <div class="pin"></div>
+        <p>"Most of what I build starts with a question about how something works underneath —
+          then it turns into a small program that answers it."</p>
+        <div class="stamp-line">— note to self, first year</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section" id="about">
+    <p class="kicker">— about</p>
+    <h2>About</h2>
+    <div class="about-grid">
+      <p>I'm a Computer Science student at KL University, Hyderabad, currently in the first year of a
+        B.Tech (2025–2029). Most of what I build starts as a question about how something works
+        underneath — a shell, a data structure, a banking ledger — and turns into a small C or Java
+        program that answers it.</p>
+      <p>Alongside systems-level work, I build for the browser: React components, plain JavaScript
+        apps and Python scripts for analysing data. I like projects that are small enough to finish
+        and specific enough to teach me something concrete.</p>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="section" id="skills">
+    <p class="kicker">— skills</p>
+    <h2>Skills</h2>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <div class="label">Languages</div>
+        <div class="chips">
+          <span class="chip">Java</span>
+          <span class="chip">C</span>
+          <span class="chip">Python</span>
+          <span class="chip">JavaScript</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="label">Web</div>
+        <div class="chips">
+          <span class="chip">React</span>
+          <span class="chip">HTML</span>
+          <span class="chip">CSS</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="section" id="projects">
+    <p class="kicker">— projects</p>
+    <h2>Projects</h2>
+    <div class="filter-row" id="filterRow">
+      <button class="filter-chip active" data-filter="all">All</button>
+      <button class="filter-chip" data-filter="C">C</button>
+      <button class="filter-chip" data-filter="Python">Python</button>
+      <button class="filter-chip" data-filter="JavaScript">JavaScript</button>
+      <button class="filter-chip" data-filter="Java">Java</button>
+      <button class="filter-chip" data-filter="HTML/CSS">HTML/CSS</button>
+    </div>
+    <div class="project-grid" id="projectGrid">
+
+      <article class="card" data-tech="C">
+        <div class="pin"></div>
+        <h3>ShellForge</h3>
+        <p class="tech">C</p>
+        <p>A custom Unix-style command shell implementing command parsing, process execution and
+          built-in commands from scratch.</p>
+        <div class="card-links">
+          <a href="https://github.com/vagallamadhuri-spec?tab=repositories" target="_blank" rel="noopener">Code ↗</a>
+        </div>
+      </article>
+
+      <article class="card" data-tech="Python">
+        <div class="pin"></div>
+        <h3>Energy Efficiency Analysis</h3>
+        <p class="tech">Python</p>
+        <p>Analysis of energy consumption data to surface efficiency trends and patterns, with
+          visualisations built in Python.</p>
+        <div class="card-links">
+          <a href="https://github.com/vagallamadhuri-spec?tab=repositories" target="_blank" rel="noopener">Code ↗</a>
+        </div>
+      </article>
+
+      <article class="card" data-tech="JavaScript">
+        <div class="pin"></div>
+        <h3>UCMS</h3>
+        <p class="tech">JavaScript</p>
+        <p>A university course management app handling course listings, scheduling and student
+          records, built with JavaScript.</p>
+        <div class="card-links">
+          <a href="https://github.com/vagallamadhuri-spec?tab=repositories" target="_blank" rel="noopener">Code ↗</a>
+        </div>
+      </article>
+
+      <article class="card" data-tech="HTML/CSS">
+        <div class="pin"></div>
+        <h3>Stack vs Queue Demo</h3>
+        <p class="tech">HTML · CSS</p>
+        <p>An interactive visual walkthrough comparing LIFO stacks and FIFO queues, step by step.</p>
+        <div class="card-links">
+          <a href="https://github.com/vagallamadhuri-spec?tab=repositories" target="_blank" rel="noopener">Code ↗</a>
+        </div>
+      </article>
+
+      <article class="card" data-tech="Java">
+        <div class="pin"></div>
+        <h3>Bank Management System</h3>
+        <p class="tech">Java</p>
+        <p>A console-based banking application supporting account creation, deposits, withdrawals
+          and transaction history.</p>
+        <div class="card-links">
+          <a href="https://github.com/vagallamadhuri-spec?tab=repositories" target="_blank" rel="noopener">Code ↗</a>
+        </div>
+      </article>
+
+      <article class="card" data-tech="HTML/CSS">
+        <div class="pin"></div>
+        <h3>Website Page</h3>
+        <p class="tech">HTML</p>
+        <p>A responsive static webpage focused on clean semantic structure and layout fundamentals.</p>
+        <div class="card-links">
+          <a href="https://github.com/vagallamadhuri-spec?tab=repositories" target="_blank" rel="noopener">Code ↗</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section class="section" id="education">
+    <p class="kicker">— education</p>
+    <h2>Education</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">2025 – 2029</div>
+        <div class="tl-content">
+          <h3>B.Tech, Computer Science</h3>
+          <p>KL University, Hyderabad</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Intermediate</div>
+        <div class="tl-content">
+          <h3>MPC</h3>
+          <p>Impulse Junior College</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">High School</div>
+        <div class="tl-content">
+          <h3>Secondary Schooling</h3>
+          <p>Sri Chaitanya</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications -->
+  <section class="section" id="certifications">
+    <p class="kicker">— certifications</p>
+    <h2>Certifications</h2>
+    <div class="cert-grid">
+      <div class="cert-card">
+        <div class="cert-mark">✓</div>
+        <div>
+          <h3>React JS</h3>
+          <p>Certification in building interfaces with React.</p>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-mark">✓</div>
+        <div>
+          <h3>Python</h3>
+          <p>Certification in Python programming.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section" id="contact">
+    <p class="kicker">— contact</p>
+    <h2>Let's talk</h2>
+    <div class="contact-grid">
+      <form class="contact-form" action="https://formsubmit.co/vagallamadhuri@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="New message from portfolio site">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <div class="field">
+          <label for="name">name</label>
+          <input type="text" id="name" name="name" required placeholder="Your name">
+        </div>
+        <div class="field">
+          <label for="email">email</label>
+          <input type="email" id="email" name="email" required placeholder="you@example.com">
+        </div>
+        <div class="field">
+          <label for="message">message</label>
+          <textarea id="message" name="message" rows="5" required placeholder="Say hello..."></textarea>
+        </div>
+        <button type="submit" class="btn primary" style="align-self:flex-start;">Send message</button>
+        <p class="form-note">Sends directly to vagallamadhuri@gmail.com — no backend needed.</p>
+      </form>
+      <div class="contact-card">
+        <div class="pin"></div>
+        <a class="contact-row" href="mailto:vagallamadhuri@gmail.com">
+          <span class="k">email</span> vagallamadhuri@gmail.com
+        </a>
+        <a class="contact-row" href="https://github.com/vagallamadhuri-spec?tab=repositories" target="_blank" rel="noopener">
+          <span class="k">github</span> vagallamadhuri-spec
+        </a>
+        <a class="contact-row" href="https://www.linkedin.com/in/v-madhuri-5635723b6/" target="_blank" rel="noopener">
+          <span class="k">linkedin</span> v-madhuri
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 V. Madhuri — built with HTML, CSS &amp; JavaScript</span>
+    <span id="ghFollowersStat"></span>
+  </footer>
+</main>
+
+<script>
+  // ---------- Theme toggle ----------
+  const root = document.documentElement;
+  const toggleBtn = document.getElementById('themeToggle');
+  function applyTheme(theme){
+    root.setAttribute('data-theme', theme);
+    if (toggleBtn) toggleBtn.textContent = 'page: ' + theme;
+    localStorage.setItem('portfolio-theme', theme);
+  }
+  const saved = localStorage.getItem('portfolio-theme');
+  applyTheme(saved === 'night' ? 'night' : 'day');
+  toggleBtn && toggleBtn.addEventListener('click', () => {
+    applyTheme(root.getAttribute('data-theme') === 'day' ? 'night' : 'day');
+  });
+
+  // ---------- Active nav highlight ----------
+  const navLinks = document.querySelectorAll('#navTabs a[href^="#"]');
+  const sections = document.querySelectorAll('.section[id]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        const id = entry.target.getAttribute('id');
+        navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { rootMargin: '-35% 0px -55% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // ---------- Project filtering ----------
+  const filterRow = document.getElementById('filterRow');
+  const cards = document.querySelectorAll('#projectGrid .card');
+  filterRow.addEventListener('click', (e) => {
+    const btn = e.target.closest('.filter-chip');
+    if (!btn) return;
+    filterRow.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    cards.forEach(card => {
+      const match = filter === 'all' || card.dataset.tech === filter;
+      card.classList.toggle('hidden', !match);
+    });
+  });
+
+  // ---------- GitHub API integration ----------
+  const ghUser = 'vagallamadhuri-spec';
+  fetch(`https://api.github.com/users/${ghUser}`)
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(data => {
+      const repoStat = document.getElementById('ghRepoStat');
+      if (repoStat && typeof data.public_repos === 'number'){
+        repoStat.innerHTML = `<b>${data.public_repos}</b><span>public repos</span>`;
+      }
+      const followersEl = document.getElementById('ghFollowersStat');
+      if (followersEl && typeof data.followers === 'number'){
+        followersEl.textContent = `github: ${data.public_repos} repos · ${data.followers} followers`;
+      }
+    })
+    .catch(() => {});
+</script>
+</body>
+</html>
